@@ -31,7 +31,7 @@ class Client;
 class ListObjectsResult {
  private:
   Client* client_ = NULL;
-  ListObjectsArgs args_;
+  ListObjectsArgs &args_;
   bool failed_ = false;
   ListObjectsResponse resp_;
   std::list<Item>::iterator itr_;
@@ -39,7 +39,7 @@ class ListObjectsResult {
   void Populate();
 
  public:
-  ListObjectsResult(error::Error err);
+  ListObjectsResult(error::Error err, ListObjectsArgs &args);
   ListObjectsResult(Client* client, ListObjectsArgs &args);
   Item& operator*() const { return *itr_; }
   operator bool() const { return itr_ != resp_.contents.end(); }

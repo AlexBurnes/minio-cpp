@@ -178,7 +178,7 @@ struct ListObjectsV1Args : public ListObjectsCommonArgs {
   std::string marker;
 
   ListObjectsV1Args();
-  ListObjectsV1Args(ListObjectsArgs args);
+  ListObjectsV1Args(ListObjectsArgs const &args);
 };  // struct ListObjectsV1Args
 
 struct ListObjectsV2Args : public ListObjectsCommonArgs {
@@ -188,7 +188,7 @@ struct ListObjectsV2Args : public ListObjectsCommonArgs {
   bool include_user_metadata;
 
   ListObjectsV2Args();
-  ListObjectsV2Args(ListObjectsArgs args);
+  ListObjectsV2Args(ListObjectsArgs const &args);
 };  // struct ListObjectsV2Args
 
 struct ListObjectVersionsArgs : public ListObjectsCommonArgs {
@@ -196,7 +196,7 @@ struct ListObjectVersionsArgs : public ListObjectsCommonArgs {
   std::string version_id_marker;
 
   ListObjectVersionsArgs();
-  ListObjectVersionsArgs(ListObjectsArgs args);
+  ListObjectVersionsArgs(ListObjectsArgs const &args);
 };  // struct ListObjectVersionsArgs
 
 struct PutObjectArgs : public PutObjectBaseArgs {

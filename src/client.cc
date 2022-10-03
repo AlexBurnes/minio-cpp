@@ -15,16 +15,16 @@
 
 #include "client.h"
 
-minio::s3::ListObjectsResult::ListObjectsResult(error::Error err) {
+minio::s3::ListObjectsResult::ListObjectsResult(error::Error err,
+                                                ListObjectsArgs &args) : args_(args) {
   this->failed_ = true;
   this->resp_.contents.push_back(Item(err));
   this->itr_ = resp_.contents.begin();
 }
 
 minio::s3::ListObjectsResult::ListObjectsResult(Client* client,
-                                                ListObjectsArgs &args) {
+                                                ListObjectsArgs &args) : args_(args) {
   this->client_ = client;
-  this->args_ = args;
   Populate();
 }
 
@@ -630,7 +630,7 @@ minio::s3::DownloadObjectResponse minio::s3::Client::DownloadObject(
 
 minio::s3::ListObjectsResult minio::s3::Client::ListObjects(
     ListObjectsArgs &args) {
-  if (error::Error err = args.Validate()) return err;
+  if (error::Error err = args.Validate()) return ListObjectsResult(err, args);
 
   return ListObjectsResult(this, args);
 }
