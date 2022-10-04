@@ -16,14 +16,16 @@
 #include "client.h"
 
 minio::s3::ListObjectsResult::ListObjectsResult(error::Error err,
-                                                ListObjectsArgs &args) : args_(args) {
+                                                ListObjectsArgs& args)
+    : args_(args) {
   this->failed_ = true;
   this->resp_.contents.push_back(Item(err));
   this->itr_ = resp_.contents.begin();
 }
 
 minio::s3::ListObjectsResult::ListObjectsResult(Client* client,
-                                                ListObjectsArgs &args) : args_(args) {
+                                                ListObjectsArgs& args)
+    : args_(args) {
   this->client_ = client;
   Populate();
 }
@@ -40,8 +42,7 @@ void minio::s3::ListObjectsResult::Populate() {
   }
 
   std::string region;
-  if (GetRegionResponse resp =
-          client_->GetRegion(args_.bucket, args_.region)) {
+  if (GetRegionResponse resp = client_->GetRegion(args_.bucket, args_.region)) {
     region = resp.region;
     if (args_.recursive) {
       args_.delimiter = "";
@@ -629,7 +630,7 @@ minio::s3::DownloadObjectResponse minio::s3::Client::DownloadObject(
 }
 
 minio::s3::ListObjectsResult minio::s3::Client::ListObjects(
-    ListObjectsArgs &args) {
+    ListObjectsArgs& args) {
   if (error::Error err = args.Validate()) return ListObjectsResult(err, args);
 
   return ListObjectsResult(this, args);
